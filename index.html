@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dhanunjaya Rao | Portfolio</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Inter',sans-serif;background:#f9fafc;color:#1e293b;}
+
+    .container{max-width:1100px;margin:auto;padding:0 20px;}
+
+    .navbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:20px 0;
+    }
+
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:700;
+    }
+
+    .logo img{height:40px;}
+
+    .nav-links{
+      list-style:none;
+      display:flex;
+      gap:20px;
+    }
+
+    .nav-links a{text-decoration:none;color:#333;}
+
+    .hero{padding:50px 0;}
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:40px;
+      align-items:center;
+    }
+
+    .profile-img{
+      width:280px;
+      border-radius:50%;
+    }
+
+    .hero h1{font-size:2.5rem;}
+    .hero span{color:#2563eb;}
+
+    .btn{
+      background:#0f172a;
+      color:#fff;
+      padding:10px 20px;
+      border-radius:25px;
+      text-decoration:none;
+      display:inline-block;
+      margin-top:10px;
+    }
+
+    .section{padding:50px 0;text-align:center;}
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:20px;
+      margin-top:20px;
+    }
+
+    .card{
+      background:#fff;
+      padding:20px;
+      border-radius:15px;
+      box-shadow:0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    .contact-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:30px;
+      text-align:left;
+    }
+
+    ul{list-style:none;margin-top:20px;}
+    li{margin-bottom:10px;}
+
+    footer{
+      background:#0f172a;
+      color:#fff;
+      text-align:center;
+      padding:20px;
+    }
+
+    @media(max-width:768px){
+      .hero-grid,.contact-grid{grid-template-columns:1fr;text-align:center;}
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="container">
+    <div class="navbar">
+
+      <!-- LOGO -->
+      <div class="logo">
+        <img src="logo.png" alt="logo">
+        <span>Dhanunjay.dev</span>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Work</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section id="home" class="hero">
+  <div class="container">
+    <div class="hero-grid">
+
+      <!-- YOUR PHOTO -->
+      <div>
+        <img class="profile-img" src="myphoto.jpg" alt="My Photo">
+      </div>
+
+      <div>
+        <h1>Hi, I'm <span>Nandigam Dhanunjaya Rao</span></h1>
+        <p>Frontend Developer</p>
+        <p>I develop responsive websites and web applications with clean UI and performance.</p>
+        <a href="#" class="btn">Download Resume</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="section">
+  <div class="container">
+    <h2>Skills</h2>
+    <div class="grid">
+      <div class="card">HTML</div>
+      <div class="card">CSS</div>
+      <div class="card">JavaScript</div>
+      <div class="card">React</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="section">
+  <div class="container">
+    <h2>Projects</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>E-Commerce Website</h3>
+        <p>Cloud hosted shopping website with cart and payment system.</p>
+      </div>
+      <div class="card">
+        <h3>Portfolio Website</h3>
+        <p>Responsive personal portfolio using HTML and CSS.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section">
+  <div class="container">
+    <div class="contact-grid">
+
+      <div>
+        <h2>Contact</h2>
+        <ul>
+          <li><i class="fas fa-envelope"></i> nandigamdhanunjay@gmail.com</li>
+          <li><i class="fas fa-phone"></i> +91 9876543210</li>
+          <li><i class="fas fa-map-marker-alt"></i> Bhubaneswar, India</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Resume</h3>
+        <p>Click below to download</p>
+        <a href="#" class="btn">Download Resume</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>© 2025 Dhanunjaya Rao</p>
+</footer>
+
+</body>
+</html>
