@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>TempConvert Pro | Celsius · Fahrenheit · Kelvin</title>
+  <!-- Google Font & Font Awesome for icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(145deg, #e0eafc 0%, #cfdef3 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+    }
+
+    /* main converter card */
+    .converter-card {
+      max-width: 620px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(2px);
+      border-radius: 48px;
+      box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.05);
+      padding: 36px 32px 44px;
+      transition: all 0.2s;
+      border: 1px solid rgba(255,255,255,0.5);
+    }
+
+    /* header with laptop icon */
+    .header-icon {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 28px;
+      border-bottom: 2px solid #eef2ff;
+      padding-bottom: 18px;
+    }
+    .title h1 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #1f2b4e, #2c3e8f);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.3px;
+    }
+    .title p {
+      color: #4a5b7a;
+      font-size: 0.85rem;
+      margin-top: 6px;
+    }
+    .laptop-badge {
+      background: #eef2ff;
+      border-radius: 60px;
+      padding: 8px 18px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #1e2f5e;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 2px 6px rgba(0,0,0,0.02);
+    }
+    .laptop-badge i {
+      font-size: 1.2rem;
+      color: #2c5282;
+    }
+
+    /* input group */
+    .input-group {
+      margin: 28px 0 22px;
+    }
+    .input-label {
+      font-weight: 600;
+      color: #1e2a47;
+      margin-bottom: 8px;
+      display: block;
+      font-size: 0.95rem;
+    }
+    .temp-input-wrapper {
+      display: flex;
+      align-items: center;
+      background: #f8fafd;
+      border-radius: 60px;
+      border: 1px solid #e2e8f0;
+      transition: 0.2s;
+      padding: 4px 6px 4px 20px;
+    }
+    .temp-input-wrapper:focus-within {
+      border-color: #3b6ea0;
+      box-shadow: 0 0 0 3px rgba(59, 110, 160, 0.2);
+    }
+    .temp-input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-size: 1.4rem;
+      font-weight: 500;
+      padding: 16px 0;
+      outline: none;
+      font-family: 'Inter', monospace;
+      color: #0b1e3a;
+    }
+    .temp-input::placeholder {
+      color: #b9c3da;
+      font-weight: 400;
+      font-size: 1rem;
+    }
+    .unit-symbol {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #2c5282;
+      background: #eef2ff;
+      padding: 8px 18px;
+      border-radius: 50px;
+      margin-left: 8px;
+    }
+
+    /* dropdown / radio style — using elegant select */
+    .unit-selector {
+      margin: 20px 0 20px;
+    }
+    .selector-label {
+      font-weight: 600;
+      margin-bottom: 12px;
+      display: block;
+      color: #1e2a47;
+    }
+    .select-box {
+      width: 100%;
+      padding: 14px 20px;
+      background-color: #f8fafd;
+      border: 1px solid #e2e8f0;
+      border-radius: 60px;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #0f2b3d;
+      cursor: pointer;
+      outline: none;
+      transition: 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .select-box:focus {
+      border-color: #3b6ea0;
+      box-shadow: 0 0 0 3px rgba(59, 110, 160, 0.2);
+    }
+
+    /* convert button */
+    .convert-btn {
+      background: #1e2f5e;
+      border: none;
+      width: 100%;
+      padding: 16px 12px;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.25s;
+      margin: 12px 0 28px;
+      box-shadow: 0 8px 18px rgba(30, 47, 94, 0.2);
+    }
+    .convert-btn:hover {
+      background: #0f2347;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 22px rgba(30, 47, 94, 0.25);
+    }
+    .convert-btn i {
+      font-size: 1.2rem;
+    }
+
+    /* display area */
+    .result-area {
+      background: linear-gradient(115deg, #f1f5fe 0%, #ffffff 100%);
+      border-radius: 36px;
+      padding: 24px 22px;
+      border: 1px solid #eef2fa;
+      text-align: center;
+      margin-top: 8px;
+    }
+    .result-label {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+      color: #5b6e8c;
+    }
+    .converted-value {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: #1e2f5e;
+      margin: 12px 0 6px;
+      word-break: break-word;
+      line-height: 1.2;
+    }
+    .unit-badge {
+      display: inline-block;
+      background: #dfe9f5;
+      padding: 6px 20px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #1e3a5f;
+    }
+    .error-message {
+      color: #c7254e;
+      background: #ffeef3;
+      border-radius: 40px;
+      padding: 10px 18px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-top: 16px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .error-message i {
+      font-size: 1rem;
+    }
+    /* Kelvin extra info hint */
+    .extra-note {
+      font-size: 0.7rem;
+      text-align: center;
+      margin-top: 20px;
+      color: #6c7c9e;
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    hr {
+      margin: 12px 0;
+      border: none;
+      border-top: 1px solid #e9edf4;
+    }
+    @media (max-width: 500px) {
+      .converter-card {
+        padding: 28px 20px;
+      }
+      .converted-value {
+        font-size: 2rem;
+      }
+      .title h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="converter-card">
+  <div class="header-icon">
+    <div class="title">
+      <h1>🌡️ TempConvert Pro</h1>
+      <p>Celsius · Fahrenheit · Kelvin converter</p>
+    </div>
+    <div class="laptop-badge">
+      <i class="fas fa-laptop-code"></i> <span>Laptop with Browser Icon</span>
+    </div>
+  </div>
+
+  <!-- input field -->
+  <div class="input-group">
+    <label class="input-label" for="temperatureInput">Enter temperature</label>
+    <div class="temp-input-wrapper">
+      <input type="number" id="temperatureInput" class="temp-input" placeholder="e.g., 25.5" step="any" autocomplete="off">
+      <span class="unit-symbol" id="inputUnitSymbol">°C</span>
+    </div>
+  </div>
+
+  <!-- dropdown for input unit (Celsius / Fahrenheit / Kelvin) extra challenge -->
+  <div class="unit-selector">
+    <label class="selector-label" for="unitSelect">Input unit</label>
+    <select id="unitSelect" class="select-box">
+      <option value="C">Celsius (°C)</option>
+      <option value="F">Fahrenheit (°F)</option>
+      <option value="K">Kelvin (K) 🔥 extra</option>
+    </select>
+  </div>
+
+  <!-- Convert button -->
+  <button id="convertBtn" class="convert-btn">
+    <i class="fas fa-exchange-alt"></i> Convert temperature
+  </button>
+
+  <!-- Display area for final converted temperature and unit -->
+  <div class="result-area" id="resultArea">
+    <div class="result-label">converted temperature</div>
+    <div class="converted-value" id="convertedValue">—</div>
+    <div class="unit-badge" id="convertedUnit">°C / °F / K</div>
+    <div id="errorMessage" class="error-message">
+      <i class="fas fa-exclamation-triangle"></i> <span id="errorText">Invalid number</span>
+    </div>
+  </div>
+  <div class="extra-note">
+    <span><i class="fas fa-chart-line"></i> Supports Kelvin (K)</span>
+    <span><i class="fas fa-check-circle"></i> Real-time validation</span>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // DOM elements
+    const tempInput = document.getElementById('temperatureInput');
+    const unitSelect = document.getElementById('unitSelect');
+    const convertBtn = document.getElementById('convertBtn');
+    const convertedValueSpan = document.getElementById('convertedValue');
+    const convertedUnitSpan = document.getElementById('convertedUnit');
+    const errorMessageDiv = document.getElementById('errorMessage');
+    const errorTextSpan = document.getElementById('errorText');
+    const inputUnitSymbolSpan = document.getElementById('inputUnitSymbol');
+
+    // Helper: update the visual unit symbol near input field
+    function updateInputUnitSymbol() {
+      const selected = unitSelect.value;
+      if (selected === 'C') inputUnitSymbolSpan.textContent = '°C';
+      else if (selected === 'F') inputUnitSymbolSpan.textContent = '°F';
+      else inputUnitSymbolSpan.textContent = 'K';
+    }
+
+    // Conversion logic: from any unit to the other two scales (display both? requirement says final converted temperature and unit.
+    // We'll design that the converter shows the equivalent temperature in the two other units? But spec expects "converted temperature" singular.
+    // However to be user-friendly and include Kelvin challenge: we show the conversion result in the opposite most common scales?
+    // Actually typical converter: you input value + input unit, you get output in the other two scales. To keep clean, we display a primary conversion (from input to the two other units) 
+    // but because "display area for the final converted temperature and unit" could be one, we show the main conversion relative to a default? Instead we provide a smart output: 
+    // If user chooses Celsius, we convert to Fahrenheit and Kelvin and display them together? That would satisfy "extra challenge Kelvin".
+    // I choose to output the converted temperature in the two remaining units, clearly labelled, giving full flexibility. That shows both conversions at once and meets the extra challenge.
+    // However the requirement might expect a single value. But to be robust and impressive, we can show both converted values (Fahrenheit and Kelvin if input Celsius etc.)
+    // To be clear, the user will always see the temperature in the other relevant units. That makes conversion complete.
+    // We'll show both results inside the display area, maintaining a clean design.
+    // Also handle error case.
+
+    function showError(message) {
+      errorMessageDiv.style.display = 'flex';
+      errorTextSpan.textContent = message;
+      convertedValueSpan.textContent = '—';
+      convertedUnitSpan.textContent = 'Invalid input';
+    }
+
+    function hideError() {
+      errorMessageDiv.style.display = 'none';
+    }
+
+    // format number to 2 decimal places, remove trailing .00 if integer like
+    function formatTemp(value) {
+      if (value === undefined || value === null || isNaN(value)) return '?';
+      const rounded = Math.round(value * 100) / 100;
+      // if it's an integer (like 25.00) show as 25
+      if (Math.abs(rounded - Math.round(rounded)) < 0.0001) {
+        return Math.round(rounded).toString();
+      }
+      return rounded.toFixed(2);
+    }
+
+    // Main conversion and display
+    function performConversion() {
+      // Reset error
+      hideError();
+      
+      // Get raw input value
+      let rawValue = tempInput.value.trim();
+      if (rawValue === "") {
+        showError("Please enter a temperature value.");
+        return;
+      }
+      const numericValue = parseFloat(rawValue);
+      if (isNaN(numericValue)) {
+        showError("Invalid number! Use digits (e.g., 32.5)");
+        return;
+      }
+
+      const inputUnit = unitSelect.value; // 'C', 'F', 'K'
+      let celsius = null;
+      let fahrenheit = null;
+      let kelvin = null;
+
+      // Convert input to all scales based on chosen unit
+      if (inputUnit === 'C') {
+        celsius = numericValue;
+        fahrenheit = (celsius * 9/5) + 32;
+        kelvin = celsius + 273.15;
+      } 
+      else if (inputUnit === 'F') {
+        fahrenheit = numericValue;
+        celsius = (fahrenheit - 32) * 5/9;
+        kelvin = celsius + 273.15;
+      } 
+      else if (inputUnit === 'K') {
+        kelvin = numericValue;
+        celsius = kelvin - 273.15;
+        fahrenheit = (celsius * 9/5) + 32;
+      } 
+      else {
+        showError("Unknown unit selected");
+        return;
+      }
+
+      // Build output HTML based on input unit (show other two scales prominently)
+      // To satisfy "display area for final converted temperature and unit" we present both converted values clearly.
+      // This includes extra Kelvin challenge because Kelvin will always appear if not the input.
+      let outputHtml = '';
+      let primaryUnitLabel = '';
+
+      if (inputUnit === 'C') {
+        outputHtml = `
+          <div style="margin-bottom: 12px;">
+            <span style="font-weight: 600;">🌡️ Fahrenheit:</span> 
+            <span style="font-size: 1.9rem; font-weight:700;">${formatTemp(fahrenheit)} °F</span>
+          </div>
+          <div>
+            <span style="font-weight: 600;">🧪 Kelvin (extra):</span> 
+            <span style="font-size: 1.9rem; font-weight:700;">${formatTemp(kelvin)} K</span>
+          </div>
+        `;
+        primaryUnitLabel = 'Fahrenheit & Kelvin';
+      } 
+      else if (inputUnit === 'F') {
+        outputHtml = `
+          <div style="margin-bottom: 12px;">
+            <span style="font-weight: 600;">🌡️ Celsius:</span> 
+            <span style="font-size: 1.9rem; font-weight:700;">${formatTemp(celsius)} °C</span>
+          </div>
+          <div>
+            <span style="font-weight: 600;">🧪 Kelvin (extra):</span> 
+            <span style="font-size: 1.9rem; font-weight:700;">${formatTemp(kelvin)} K</span>
+          </div>
+        `;
+        primaryUnitLabel = 'Celsius & Kelvin';
+      } 
+      else if (inputUnit === 'K') {
+        outputHtml = `
+          <div style="margin-bottom: 12px;">
+            <span style="font-weight: 600;">🌡️ Celsius:</span> 
+            <span style="font-size: 1.9rem; font-weight:700;">${formatTemp(celsius)} °C</span>
+          </div>
+          <div>
+            <span style="font-weight: 600;">🔥 Fahrenheit:</span> 
+            <span style="font-size: 1.9rem; font-weight:700;">${formatTemp(fahrenheit)} °F</span>
+          </div>
+        `;
+        primaryUnitLabel = 'Celsius & Fahrenheit';
+      }
+
+      // Update the result area: show both conversions clearly.
+      convertedValueSpan.innerHTML = outputHtml;  // Using innerHTML to show both lines
+      convertedUnitSpan.innerHTML = `<i class="fas fa-sync-alt"></i> Converted from ${inputUnit === 'C' ? '°C' : inputUnit === 'F' ? '°F' : 'K'}`;
+      
+      // Also ensure error is not visible
+      errorMessageDiv.style.display = 'none';
+    }
+
+    // Update symbol on unit dropdown change
+    function syncInputSymbolAndClearError() {
+      updateInputUnitSymbol();
+      hideError();
+      // Optional: if input is empty, keep placeholder; but don't auto convert
+    }
+
+    // Attach event listeners
+    convertBtn.addEventListener('click', () => {
+      performConversion();
+    });
+    
+    unitSelect.addEventListener('change', () => {
+      syncInputSymbolAndClearError();
+      // Optionally keep the result clean? but we don't auto convert, just reset error.
+      // But to be more user-friendly, you could clear previous conversion result.
+      convertedValueSpan.innerHTML = '—';
+      convertedUnitSpan.textContent = '°C / °F / K';
+    });
+
+    tempInput.addEventListener('input', () => {
+      hideError(); // as user types, hide previous error
+    });
+
+    // initial symbol sync
+    updateInputUnitSymbol();
+
+    // Allow Enter key to trigger convert
+    tempInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        performConversion();
+      }
+    });
+  })();
+</script>
+</body>
+</html>
